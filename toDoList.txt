@@ -1,0 +1,87 @@
+Prop Drilling
+https://kentcdodds.com/blog/prop-drilling,
+
+soru;
+şimdi...bir value bir page de belirlenirken bu value yi diğer sayfaya nasıl aktarıcam?✅
+https://youtu.be/FzBGqvxdxv0
+
+
+https://kentcdodds.com/blog/how-to-use-react-context-effectively#the-custom-consumer-hook
+https://dev.to/napoleon039/react-context-and-hooks-an-excellent-way-to-pass-data-252p
+
+
+
+şimdi create rooom butonu new game a basınca aktif olucak
+
+firebase indirilecek kurulacak 
+
+makeid vs onlar nereye konulacak?
+
+
+setdigits kısmında bir sayfanın digit bilgisi fonksiyona gitmeyecek... diğer oyuncuya gidecek..
+
+
+gamescreen eksik...
+
+her yerde handle chaneg submit functon fln var onların içinden ortak olanları bir klasöre 
+at sonra onları içeri al ve ortk olmaanları ekle
+
+sayı fonksiyonu nereye gitcek?
+
+
+
+eğer kişi single player page den girdiyse
+digits butonlarındaki değerler 
+fonksiyona gitsin
+
+bir 
+SetDigits.js =>
+
+
+bizim fonksiyonu tam olarak single player page de kullanmamız lazım...
+/* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+
+
+-----
+const specialOfTheDay = doc(firestore,'dailySpecial/2022-08-10');
+    // function writeDailySpecial(){
+    //     const docData = {
+    //         description:  'vanilla',
+    //         price: 3.99,
+    //         milk: 'whole',
+    //         vegan: false,
+
+
+    //     };
+    //     setDoc(specialOfTheDay,docData);
+
+    // }
+    // console.log("hello there firestore");
+    // writeDailySpecial();
+    
+    // const {setRoomId,roomId} = useGame();
+    // const app = initializeApp(firebaseConfig);
+    // const db = getFirestore(app);
+    // const roomColRef = collection(db, 'rooms')
+    // const analytics = getAnalytics(app);
+    function createRoom(){}
+    // var a = makeid(5);
+    // setRoomId(a);
+    // addDoc(roomColRef, {
+    //     created: serverTimestamp(),
+    //     roomId: roomId,
+    //     users: [{ player1: "faruk" }]
+    
+    // });
+    // console.log(roomId);
+    // function makeid(length) {
+    
+    //     var result = "";
+    //     var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    //     var charactersLength = characters.length;
+    //     for (var i = 0; i < length; i++) {
+    //         result += characters.charAt(Math.floor(Math.random() *
+    //             charactersLength));
+    //     }
+    //     return result;
+    // }
