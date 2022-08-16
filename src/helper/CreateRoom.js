@@ -1,5 +1,5 @@
-import { addDoc ,serverTimestamp} from "firebase/firestore/lite";
-import {roomColRef} from "helper/Firebase";
+import { addDoc ,serverTimestamp,collection} from "firebase/firestore/lite";
+import firebase from "./Firebase";
 function makeid(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -10,7 +10,10 @@ function makeid(length) {
 }
 const roomId = makeid(5);
 const CreateRoom =()=> { 
-   
+
+
+    const roomColRef = collection(firebase, 'rooms')
+
  
     addDoc(roomColRef, {
         created: serverTimestamp(),
