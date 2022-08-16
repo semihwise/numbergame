@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import Firebase from 'utils/firebase';
+
 const GameContext = createContext();
 export function useGame() {
     return useContext(GameContext);

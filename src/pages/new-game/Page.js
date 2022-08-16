@@ -5,7 +5,7 @@ import { useGame } from "context";
 import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Firebase from 'utils/firebase';
+
 
 const Page = () => {
 

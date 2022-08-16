@@ -1,16 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { useGame } from "context";
-import { 
-    addDoc, 
-    serverTimestamp, 
-    getFirestore,
-    collection,
-    getDocs,
-    getDoc,
-    doc,
-    setDoc} from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { collection, getFirestore} from 'firebase/firestore/lite';
+
 const firebaseConfig = {
     apiKey: "AIzaSyCz_J1_EZxVFtTHM__osvVWkTgeb9hPHKQ",
     authDomain: "number-game-88cab.firebaseapp.com",
@@ -21,6 +11,6 @@ const firebaseConfig = {
     measurementId: "G-W38ZZYHERS"
 };
 const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 
-const db = getFirestore(app);
-const roomColRef = collection(db, 'rooms');
+export const roomColRef = collection(db, 'rooms')
