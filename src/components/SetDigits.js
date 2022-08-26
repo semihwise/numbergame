@@ -1,8 +1,10 @@
+
 import { useGame } from "context";
 import { Form } from "react-bootstrap";
 
 const SetDigits = () => {
     const { setDigits } = useGame();
+
     return(
         <Form.Group className="mb-3">
             <Form.Check name="digit" type="radio"label="3 Digits"  

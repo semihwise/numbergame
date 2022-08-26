@@ -1,5 +1,8 @@
-import { addDoc ,serverTimestamp} from "firebase/firestore/lite";
-import {roomColRef} from "helper/Firebase";
+
+import { useGame } from "context";
+import { doc, setDoc ,serverTimestamp, Timestamp} from "firebase/firestore";
+import { roomDocRef,roomColRef } from "./Firebase";
+
 function makeid(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -8,15 +11,25 @@ function makeid(length) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));}
     return result;
 }
+
+
 const roomId = makeid(5);
 const CreateRoom =()=> { 
-   
- 
-    addDoc(roomColRef, {
+    const {digits,username,secretNumber} = useGame();
+    const data = {
         created: serverTimestamp(),
         roomId: roomId,
-        users: [{ player1: "faruk" }]
-    });
+        digits: digits,
+        players: []
+
+
+
+        
+
+    }
+    setDoc(roomDocRef, data);
+
+
     return roomId;
 }
 export default CreateRoom;

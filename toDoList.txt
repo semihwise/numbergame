@@ -13,20 +13,20 @@ https://dev.to/napoleon039/react-context-and-hooks-an-excellent-way-to-pass-data
 
 şimdi create rooom butonu new game a basınca aktif olucak
 
-firebase indirilecek kurulacak 
+firebase indirilecek kurulacak  ✅
 
-makeid vs onlar nereye konulacak?
+makeid vs onlar nereye konulacak?✅
 
 
 setdigits kısmında bir sayfanın digit bilgisi fonksiyona gitmeyecek... diğer oyuncuya gidecek..
 
 
-gamescreen eksik...
+gamescreen eksik...✅
 
 her yerde handle chaneg submit functon fln var onların içinden ortak olanları bir klasöre 
 at sonra onları içeri al ve ortk olmaanları ekle
 
-sayı fonksiyonu nereye gitcek?
+sayı fonksiyonu nereye gitcek? ✅
 
 
 
@@ -41,47 +41,190 @@ SetDigits.js =>
 bizim fonksiyonu tam olarak single player page de kullanmamız lazım...
 /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
 
-
+✅
 -----
-const specialOfTheDay = doc(firestore,'dailySpecial/2022-08-10');
-    // function writeDailySpecial(){
-    //     const docData = {
-    //         description:  'vanilla',
-    //         price: 3.99,
-    //         milk: 'whole',
-    //         vegan: false,
+{
+  "roomId":"XUE21",
+  "digittype":4,
+  "players": [
+    {
+      "username":"farukciftler",
+      "number":1245
+      "guesses":[
+        array
+        ]
+    },
+    {
+      "username":"thezkaya",
+      "number":1245
+    }]
+}
+
+//CREATE GAME YAPAN OYUNCU SENARYOSU
+// 1-) roomId oluşturdun✅
+// 2-) player1 username'i güncellenecek, digittype güncellenecek, player1number güncellenecek✅
+//3-)2. player oyuna girene kadar loading ekranı dön, username ve number girildiği anda başla
+
+//JOIN GAME YAPAN OYUNCU SENARYOSU
+
+//1-) xyx.com/join/XUE21✅
+//2-)username ve number giriş ekranı doldurulacak
+//3-) oyun başlayacak
+firebase doc insert
+doc update
+doc read
+listening documents firebase
+
+---------------------------
+For router : 
+----------
+
+e Intentional Navigation
+https://v5.reactrouter.com/core/api/Redirect
+https://www.copycat.dev/blog/react-js-navigation/
+-----------------------------------------------------
 
 
+
+    const {setRoomId}=useGame();
+    const roomId= CreateRoom();>>> sayfa yüklenince roomId mizi belirlemiş oluyoruz, 
+    const navigate = useNavigate();
+    const handleClick = (e)=>{
+        e.preventDefault();
+        
+        setRoomId(roomId); handleClick ile de bunu update ediyoruz  =) 
+        navigate("new-game");
+        console.log(roomId);
+   
+    }
+    yani  createroom daki addDoc doğru yerde...
+    benim ana doc burda olucak... home a giren herkesin bir doc u olucak...
+    sonra biz bunda setDigits ile güncellediğimiz digitis i aslında doc içinde de güncellemeiz lazım...
+     bu işlem new-game menu de olacak, kişi digits seçtiğinde ve 
+     username & secret number girip join game yaptığında bir bekleme olacak... o süredee karşı oyuncunun bilgileri girlecek..
+newgame kısmında submit ile handle ettiklerimizi 
+doc e eklememz azım
+
+
+     // players: [
+        //     {
+        //       "username":"farukciftler",
+        //       "number":1245,
+        //       "guesses": [[],[]
+                
+        //         ]
+        //     },
+        //     {
+        //       "username":"thezkaya",
+        //       "number":1245,
+        //       "guesses": [
+        //         [3241],[5632]
+        //         ]
+              
+        //     }]
+
+:)
+
+        now: Call a method to get the data.
+Set a listener to receive data-change events.
+ bunu dinamik reactta yaz
+Rakipte
+
+
+
+https://feloy.medium.com/building-a-multi-player-board-game-with-firebase-firestore-functions-part-1-17527c5716c5
+
+
+oyuna bitri katılınca onsnpshot çalış 
+id oyuna katılanlar nesneye eklene
+
+https://youtu.be/Iw1YmBoOYb4
+
+ player oyuna girsin  nasıl?
+
+ https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array
+
+
+const player1 = {
+  username: username, 
+  number: secretNumber
+
+}
+ players.push(player1)
+
+ benim update yaptığımda players içine player2 pushlamam lazım...
+ ama nasıl?
+ öncelikle benim bu players dizi sine erişmem lazım sonra da buraya pushlayalım
+ ama dışardan yapınca sadece yeni listeye pushluyorum, 
+
+
+
+
+
+    const updateUser = async() => {
+
+        const player1 = {
+            username: username, 
+            number: secretNumber
+          
+        }
+         updateDoc(roomDocRef,{
+            digits: digits,
+            players: [player1]
+
+        })
+
+        onSnapshot(roomDocRef, (doc) => {
+          
+            if (doc.data().players.length==1){
+                console.log("waiting")
+
+            }
+            if (doc.data().players.length==2){
+                navigate(roomId);
+
+            }
+
+            
+      
+            console.log("Current data: ", doc.data(),doc.id);});
+            
+
+
+    }
+
+----------------------------------------------------------------------------------------
+        // useEffect(() => {
+    //     const getUsers = async () => {
+    //       const data = await getDocs(q);
+    //       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     //     };
-    //     setDoc(specialOfTheDay,docData);
+    
+    //     getUsers();
+    //   }, [])
+----------------------------------------------------------------------------------------
 
-    // }
-    // console.log("hello there firestore");
-    // writeDailySpecial();
+     const guesses = {
+            bulls: bulls,
+            cows: cows
+        }
+        
+        const game = query(roomColRef, where("roomId", "==" , roomId));
+        const data =  getDocs(game);
+        let getId;
+
+        data.forEach((doc) => { 
+        getId = doc.id;
+        })
     
-    // const {setRoomId,roomId} = useGame();
-    // const app = initializeApp(firebaseConfig);
-    // const db = getFirestore(app);
-    // const roomColRef = collection(db, 'rooms')
-    // const analytics = getAnalytics(app);
-    function createRoom(){}
-    // var a = makeid(5);
-    // setRoomId(a);
-    // addDoc(roomColRef, {
-    //     created: serverTimestamp(),
-    //     roomId: roomId,
-    //     users: [{ player1: "faruk" }]
-    
-    // });
-    // console.log(roomId);
-    // function makeid(length) {
-    
-    //     var result = "";
-    //     var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    //     var charactersLength = characters.length;
-    //     for (var i = 0; i < length; i++) {
-    //         result += characters.charAt(Math.floor(Math.random() *
-    //             charactersLength));
-    //     }
-    //     return result;
-    // }
+        const docRef = doc(roomColRef, getId)
+        const unsub = onSnapshot(docRef, (doc) => {
+
+
+            console.log("this is ",doc.data(), doc.id)
+        
+        });
+         updateDoc(docRef,{
+            guesses: arrayUnion(guesses),
+        });
+       

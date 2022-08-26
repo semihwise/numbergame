@@ -9,7 +9,7 @@ const ChangeName = () => {
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" placeholder="Enter Your Name" 
                     value={ username } 
-                    onChange={ (e) => setUsername(e.target.value) } />   
+                    onChange={ (e) => setUsername(e.target.value) } />  
             </Form.Group>
 
         </>

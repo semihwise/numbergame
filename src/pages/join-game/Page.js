@@ -1,47 +1,81 @@
 
 import { Button, Form } from "react-bootstrap";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import {
+    onSnapshot,
+    doc,
+    getDocs ,
+    updateDoc , 
+    query,where,
+    arrayUnion,
+    increment} 
+    from "firebase/firestore";
 import { useGame } from "context";
 import { useNavigate } from "react-router-dom";
 import ChangeName from "components/ChangeName";
+import {roomColRef} from "helper/Firebase";
+
 const Page = () => {
     const { 
-        setSecretNumber, 
         setUserValue,
         username,
-        digits 
+        roomCode,
+        digits
     } = useGame();
     const[ value,setValue] = useState("")
-    const[roomCode, setRoomCode] = useState("");
     const navigate = useNavigate();
     const secretNumber = Array.from((value), Number);
+
+    const querySnapshot = async () => { 
+
+        
+        const q = query(roomColRef, where("roomId", "==",  roomCode))
+        const data = await getDocs(q);
+        let getId;
+ 
+        const player2 = {
+            username: username, 
+            number: secretNumber,
+            guesses: []
+        }
+        data.forEach((doc) => { 
+            getId = doc.id;
+        
+        })
+        const docRef = doc(roomColRef, getId)
+
+        const unsub = onSnapshot(docRef, (doc) => {
+            navigate(roomCode)
+        });
+        await updateDoc(docRef,{
+            numberOfPlayers: increment(1),
+            players: arrayUnion(player2)
+        }).then({unsub})
+    };
     function handleSubmit(e) {
         e.preventDefault();
         if (!username)
             return;
         setUserValue(username);
-        navigate("game");
-        setSecretNumber(secretNumber);
+        querySnapshot();
+
     }
     return (
         <>
             <Form  onSubmit={ handleSubmit }>
                 <ChangeName/> 
                 <Form.Group className="mb-3">
-                    <Form.Label> Room Code: </Form.Label>
-                    <Form.Control required autoComplete="off" placeholder="Enter Room Code"
-                        value={ roomCode }
-                        onChange={ (e) => setRoomCode(e.target.value) }/>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>{ digits } digits Secret Number</Form.Label>
-                    <Form.Control type="text" placeholder="What's your secret number" 
-                        value={ value }//BU SECRET NUMBER KARŞIYA GİTCEK
+                    <Form.Label>game is playing with {digits} digits Secret Number</Form.Label>   
+                    <Form.Control type="text" placeholder="write your secret number" 
+                        value={ value }
                         onChange={(e)=> setValue((e.target.value))}/>
                 </Form.Group>
+        
                 <Button variant="dark" type="submit">Join Game</Button>
             </Form>
+ 
+            
+            
         </>
     );
 }

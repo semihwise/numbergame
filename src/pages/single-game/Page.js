@@ -14,8 +14,6 @@ const Page = () => {
             return;
         setUserValue(username);
         navigate("game");
-        console.log("digits:",digits);
-        console.log( "sss:",secretNumber);
         setSecretNumber(secretNumber);
     }
     return ( 
